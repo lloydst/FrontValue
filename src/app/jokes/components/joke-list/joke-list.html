@@ -1,5 +1,5 @@
-@for (joke of (jokes | async); track joke.id)  {
-   <cn-joke-item [joke]="joke"></cn-joke-item>
+@for (joke of jokes | async; track joke.id) {
+    <cn-joke-item [joke]="joke"></cn-joke-item>
 } @empty {
-  <p>No jokes found.</p>
+    <p>No jokes found.</p>
 }
