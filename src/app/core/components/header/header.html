@@ -1,8 +1,14 @@
 <h1>Chuck Norris puns</h1>
 
-<nav>
-  <ul>
-    <li><a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" >Jokes</a></li>
-    <li><a routerLink="/favorites" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" >Favorites</a></li>
-  </ul>
-</nav>
+<ul>
+    <li>
+      <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" >
+        <mat-icon>home</mat-icon>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/favorites" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" >
+        <mat-icon>favorite</mat-icon>
+      </a>
+    </li>
+</ul>

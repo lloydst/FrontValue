@@ -1,15 +1,19 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Joke } from '../../../core/models/joke';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { Favorite } from '../../../core/services/favorite';
 
 @Component({
-  selector: 'cn-joke-item',
-  imports: [],
-  templateUrl: './joke-item.html',
-  styleUrl: './joke-item.scss',
+    selector: 'cn-joke-item',
+    imports: [MatIconModule, MatButtonModule],
+    templateUrl: './joke-item.html',
+    styleUrl: './joke-item.scss',
 })
 export class JokeItem {
-  joke = input.required<Joke>()
-  addToFavorites() { 
-    // to be implemented
-  }
+    private favorite = inject(Favorite);
+    joke = input.required<Joke>();
+    addToFavorites() {
+        this.favorite.add(this.joke());
+    }
 }

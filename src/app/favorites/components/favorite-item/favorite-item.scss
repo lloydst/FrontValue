@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+:host {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+img {
+    flex: 0 0 auto;
+}
+span {
+    flex: 1;
+    min-width: 0;
+}
+button {
+    flex: 0 0 auto;
+    :hover {
+        @include mat.icon-overrides(
+            (
+                color: red,
+            )
+        );
+    }
+}

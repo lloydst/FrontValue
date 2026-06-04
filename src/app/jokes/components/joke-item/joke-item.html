@@ -1,1 +1,2 @@
-<img [src]="joke().icon_url" [alt]="joke().joke"> <span>{{ joke().joke }}</span> <button (click)="addToFavorites()">add to favorites</button>
+<img [src]="joke().icon_url" alt="Chuck Norris emoticon" /> <span>{{ joke().joke }}</span>
+<button matIconButton (click)="addToFavorites()"><mat-icon>favorite</mat-icon></button>
