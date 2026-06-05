@@ -11,5 +11,15 @@ import { AsyncPipe } from '@angular/common';
 })
 export class FavoritePage {
     favorite = inject(Favorite);
-    jokes = this.favorite.getAll();
+    jokes = this.favorite.favorites$;
+    constructor() {
+        this.favorite
+            .getAll()
+            .then((jokes) => {
+                console.log('Fetched favorites on page load:', jokes);
+            })
+            .catch((error) => {
+                console.error('Error fetching favorites on page load:', error);
+            });
+    }
 }

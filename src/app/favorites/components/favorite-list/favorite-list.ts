@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { FavoriteItem } from '../favorite-item/favorite-item';
 import { Joke } from '../../../core/models/joke';
 
@@ -10,4 +10,10 @@ import { Joke } from '../../../core/models/joke';
 })
 export class FavoriteList {
     jokes = input<Joke[]>();
+    sortedJokes = computed(() => {
+        const jokesArray = this.jokes();
+        return jokesArray
+            ? [...jokesArray].sort((a, b) => (b.timestamp ?? 0) - (a.timestamp ?? 0))
+            : [];
+    });
 }

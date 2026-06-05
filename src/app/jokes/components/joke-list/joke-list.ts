@@ -1,15 +1,38 @@
 import { Component, inject } from '@angular/core';
 import { JokeItem } from '../joke-item/joke-item';
 import { ChuckNorrisApi } from '../../../core/services/chuck-norris-api';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
+import { Joke } from '../../../core/models/joke';
+import { ReplaySubject, from } from 'rxjs';
+import { withLatestFrom, map, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'cn-joke-list',
-    imports: [JokeItem, AsyncPipe],
+    imports: [JokeItem, AsyncPipe, JsonPipe],
     templateUrl: './joke-list.html',
     styleUrl: './joke-list.scss',
 })
 export class JokeList {
     private api = inject(ChuckNorrisApi);
-    jokes = Promise.all(Array.from({ length: 10 }, async () => await this.api.fetchJoke()));
+    private _jokes$ = new ReplaySubject<Joke[]>(1);
+    jokes$ = this._jokes$.asObservable();
+
+    constructor() {
+        this.loadJokes();
+    }
+
+    private async loadJokes() {
+        const jokes = await Promise.all(Array.from({ length: 10 }, () => this.api.fetchJoke()));
+        this._jokes$.next(jokes);
+    }
+
+    handleJokeDeleted(jokeId: string) {
+        from(this.api.fetchJoke())
+            .pipe(
+                withLatestFrom(this._jokes$),
+                map(([newJoke, jokes]) => [...jokes.filter((joke) => joke.id !== jokeId), newJoke]),
+                tap((updatedJokes) => this._jokes$.next(updatedJokes)),
+            )
+            .subscribe();
+    }
 }

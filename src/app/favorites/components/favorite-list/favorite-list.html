@@ -1,4 +1,4 @@
-@for (joke of jokes(); track joke.id) {
+@for (joke of sortedJokes(); track joke.id) {
     <cn-favorite-item [joke]="joke" />
 } @empty {
     <p>You have no favorites yet!</p>

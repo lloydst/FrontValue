@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { Joke } from '../../../core/models/joke';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +13,9 @@ import { Favorite } from '../../../core/services/favorite';
 export class JokeItem {
     private favorite = inject(Favorite);
     joke = input.required<Joke>();
+    jokeDeleted = output<string>();
     addToFavorites() {
         this.favorite.add(this.joke());
+        this.jokeDeleted.emit(this.joke().id);
     }
 }
