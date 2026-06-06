@@ -54,9 +54,8 @@ class FakeDB {
 }
 
 class FakeIDBOpenRequest {
-    
     onsuccess: any;
-    
+
     onerror: any;
     result = new FakeDB();
 
@@ -64,7 +63,6 @@ class FakeIDBOpenRequest {
         setTimeout(() => this.onsuccess?.(), 0);
     }
 }
-
 
 (globalThis as any).indexedDB = {
     open: () => new FakeIDBOpenRequest(),
