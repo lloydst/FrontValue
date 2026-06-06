@@ -36,7 +36,7 @@ export class JokeList {
             )
             .subscribe();
     }
-    
+
     handleTimerTick() {
         from(this.api.fetchJoke())
             .pipe(
