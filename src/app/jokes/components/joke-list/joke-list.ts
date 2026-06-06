@@ -1,14 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { JokeItem } from '../joke-item/joke-item';
 import { ChuckNorrisApi } from '../../../core/services/chuck-norris-api';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Joke } from '../../../core/models/joke';
 import { ReplaySubject, from } from 'rxjs';
 import { withLatestFrom, map, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'cn-joke-list',
-    imports: [JokeItem, AsyncPipe, JsonPipe],
+    imports: [JokeItem, AsyncPipe],
     templateUrl: './joke-list.html',
     styleUrl: './joke-list.scss',
 })

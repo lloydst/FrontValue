@@ -16,7 +16,7 @@ export class FavoritePage {
         this.favorite
             .getAll()
             .then((jokes) => {
-                console.log('Fetched favorites on page load:', jokes);
+                return jokes;
             })
             .catch((error) => {
                 console.error('Error fetching favorites on page load:', error);

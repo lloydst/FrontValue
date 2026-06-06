@@ -54,7 +54,7 @@ export class Favorite {
                     : store.openCursor();
                 cursor.onsuccess = (event) => {
                     const result = (event.target as IDBRequest).result;
-                    console.log('Removing oldest joke to maintain limit of 10 favorites', result);
+
                     if (result) {
                         store.delete(result.primaryKey);
                     }
