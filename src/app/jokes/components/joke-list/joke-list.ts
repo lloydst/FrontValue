@@ -43,6 +43,7 @@ export class JokeList {
                 withLatestFrom(this._jokes$),
 
                 map(([newJoke, currentJokes]) => {
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     const [_, ...remainingJokes] = currentJokes;
                     return [...remainingJokes, newJoke];
                 }),

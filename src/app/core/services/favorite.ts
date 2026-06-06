@@ -21,7 +21,9 @@ export class Favorite {
                     const store = db.createObjectStore('jokes', { keyPath: 'id' });
                     store.createIndex('timestamp', 'timestamp', { unique: false });
                 } else if (event.oldVersion < 2) {
-                    const store = (event.target as any).transaction?.objectStore('jokes');
+                    const store = (event.target as IDBOpenDBRequest).transaction?.objectStore(
+                        'jokes',
+                    );
                     if (store && !store.indexNames.contains('timestamp')) {
                         store.createIndex('timestamp', 'timestamp', { unique: false });
                     }

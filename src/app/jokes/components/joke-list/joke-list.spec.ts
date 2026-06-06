@@ -1,4 +1,4 @@
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { createChuckNorrisApiMock } from '../../../testing/mocks/chuck-norris.mock';
 import { JokeList } from './joke-list';
 import { ChuckNorrisApi } from '../../../core/services/chuck-norris-api';

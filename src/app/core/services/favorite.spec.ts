@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Favorite } from './favorite';
 import { Joke } from '../models/joke';
 
@@ -53,9 +54,9 @@ class FakeDB {
 }
 
 class FakeIDBOpenRequest {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    
     onsuccess: any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    
     onerror: any;
     result = new FakeDB();
 
@@ -64,7 +65,7 @@ class FakeIDBOpenRequest {
     }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 (globalThis as any).indexedDB = {
     open: () => new FakeIDBOpenRequest(),
 };
