@@ -4,11 +4,12 @@ import { ChuckNorrisApi } from '../../../core/services/chuck-norris-api';
 import { AsyncPipe } from '@angular/common';
 import { Joke } from '../../../core/models/joke';
 import { ReplaySubject, from } from 'rxjs';
-import { withLatestFrom, map, tap } from 'rxjs/operators';
+import { withLatestFrom, map, tap, take } from 'rxjs/operators';
+import { TimerToggle } from '../timer-toggle/timer-toggle';
 
 @Component({
     selector: 'cn-joke-list',
-    imports: [JokeItem, AsyncPipe],
+    imports: [JokeItem, AsyncPipe, TimerToggle],
     templateUrl: './joke-list.html',
     styleUrl: './joke-list.scss',
 })
@@ -32,6 +33,22 @@ export class JokeList {
                 withLatestFrom(this._jokes$),
                 map(([newJoke, jokes]) => [...jokes.filter((joke) => joke.id !== jokeId), newJoke]),
                 tap((updatedJokes) => this._jokes$.next(updatedJokes)),
+            )
+            .subscribe();
+    }
+    
+    handleTimerTick() {
+        from(this.api.fetchJoke())
+            .pipe(
+                withLatestFrom(this._jokes$),
+
+                map(([newJoke, currentJokes]) => {
+                    const [_, ...remainingJokes] = currentJokes;
+                    return [...remainingJokes, newJoke];
+                }),
+
+                tap((updatedJokes) => this._jokes$.next(updatedJokes)),
+                take(1),
             )
             .subscribe();
     }

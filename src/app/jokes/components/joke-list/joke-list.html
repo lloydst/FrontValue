@@ -1,3 +1,4 @@
+<cn-timer-toggle (tick)="handleTimerTick()" />
 @for (joke of jokes$ | async; track joke.id) {
     <cn-joke-item [joke]="joke" (jokeDeleted)="handleJokeDeleted($event)"></cn-joke-item>
 } @empty {

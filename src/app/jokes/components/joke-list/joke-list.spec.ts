@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { createChuckNorrisApiMock } from '../../../testing/mocks/chuck-norris.mock';
 import { JokeList } from './joke-list';
 import { ChuckNorrisApi } from '../../../core/services/chuck-norris-api';
@@ -44,11 +44,11 @@ describe('JokeList', () => {
         return { fixture, harness, apiMock, favoriteMock };
     }
 
-    it('should load jokes on init', async () => {
-        const { apiMock } = await setupTest();
+    it('should render jokes and timer', async () => {
+        const { harness } = await setupTest();
 
-        expect(apiMock.fetchJoke).toHaveBeenCalledTimes(10);
-        expect(apiMock.fetchJoke).toHaveBeenCalledWith();
+        expect(await harness.getItemCount()).toBe(10);
+        expect(await harness.hasTimer()).toBe(true);
     });
 
     it('should render 10 jokes', async () => {
@@ -59,11 +59,6 @@ describe('JokeList', () => {
 
     it('should show empty state when no jokes exist', async () => {
         const apiMock = createChuckNorrisApiMock();
-        // apiMock.fetchJoke.mockResolvedValue({
-        //     icon_url: '',
-        //     joke: '',
-        //     id: '1',
-        // });
 
         await TestBed.resetTestingModule();
         const favoriteMock = createFavoriteMock();
@@ -98,5 +93,26 @@ describe('JokeList', () => {
         await items[0].clickFavorite();
         expect(await harness.getItemCount()).toBe(10);
         expect(await items[1].getText()).not.toBe('Joke 1');
+    });
+
+    it('should emit tick over time', async () => {
+        vi.useFakeTimers();
+        const { fixture } = await setupTest();
+
+        const comp = fixture.debugElement.query(
+            (de) => de.name === 'cn-timer-toggle',
+        ).componentInstance;
+
+        let count = 0;
+        comp.tick.subscribe(() => count++);
+
+        comp.toggleTimer();
+
+        vi.advanceTimersByTime(5000);
+        vi.advanceTimersByTime(5000);
+
+        expect(count).toBeGreaterThan(0);
+        expect(count).toBeLessThanOrEqual(3);
+        vi.useRealTimers();
     });
 });
