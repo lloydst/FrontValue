@@ -1,6 +1,7 @@
 {
     "name": "chuck-norris",
     "version": "0.0.0",
+    "homepage": "https://lloydst.github.io/FrontValue/",
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
